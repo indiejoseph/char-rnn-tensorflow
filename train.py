@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import tensorflow as tf
 
@@ -35,11 +36,13 @@ def main():
                        help='learning rate')
     parser.add_argument('--decay_rate', type=float, default=0.97,
                        help='decay rate for rmsprop')
+    parser.add_argument('--lang', type=str, default='en',
+                       help='language')
     args = parser.parse_args()
     train(args)
 
 def train(args):
-    data_loader = TextLoader(args.data_dir, args.batch_size, args.seq_length)
+    data_loader = TextLoader(args.data_dir, args.batch_size, args.seq_length, args.lang)
     args.vocab_size = data_loader.vocab_size
 
     with open(os.path.join(args.save_dir, 'config.pkl'), 'w') as f:
