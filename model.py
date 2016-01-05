@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# 
 import tensorflow as tf
 from tensorflow.models.rnn import rnn_cell
 from tensorflow.models.rnn import seq2seq
@@ -85,5 +87,3 @@ class Model():
             ret += pred
             char = pred
         return ret
-
-

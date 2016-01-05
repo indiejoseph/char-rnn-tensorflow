@@ -1,3 +1,3 @@
 .DS_Store
-*.npy
-*.pkl
+data/*/*.npy
+data/*/*.pkl
