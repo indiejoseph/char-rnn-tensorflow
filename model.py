@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 
+#
 import tensorflow as tf
 from tensorflow.models.rnn import rnn_cell
 from tensorflow.models.rnn import seq2seq
@@ -61,7 +61,9 @@ class Model():
         self.train_op = optimizer.apply_gradients(zip(grads, tvars))
 
     def sample(self, sess, chars, vocab, num=200, prime='The '):
+        prime = prime.decode('utf-8')
         state = self.cell.zero_state(1, tf.float32).eval()
+
         for char in prime[:-1]:
             x = np.zeros((1, 1))
             x[0, 0] = vocab[char]
