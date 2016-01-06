@@ -33,6 +33,7 @@ def sample(args):
         saver = tf.train.Saver(tf.all_variables())
         ckpt = tf.train.get_checkpoint_state(args.save_dir)
         if ckpt and ckpt.model_checkpoint_path:
+            print "restoring {0}".format(ckpt.model_checkpoint_path)
             saver.restore(sess, ckpt.model_checkpoint_path)
             print model.sample(sess, chars, vocab, args.n, args.prime)
 

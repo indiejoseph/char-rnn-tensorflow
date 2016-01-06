@@ -33,7 +33,7 @@ def main():
              help='save frequency')
   parser.add_argument('--grad_clip', type=float, default=5.,
              help='clip gradients at this value')
-  parser.add_argument('--learning_rate', type=float, default=0.009,
+  parser.add_argument('--learning_rate', type=float, default=0.01,
              help='learning rate')
   parser.add_argument('--decay_rate', type=float, default=0.97,
              help='decay rate for rmsprop')
@@ -84,6 +84,7 @@ def train(args):
         feed = {model.input_data: x, model.targets: y, model.initial_state: state}
         train_loss, state, _ = sess.run([model.cost, model.final_state, model.train_op], feed)
         end = time.time()
+
         print "{}/{} (epoch {}), train_loss = {:.3f}, time/batch = {:.3f}" \
           .format(e * data_loader.num_batches + b,
               args.num_epochs * data_loader.num_batches,
