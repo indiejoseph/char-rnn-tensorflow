@@ -58,20 +58,11 @@ def train(args):
   with tf.Session() as sess:
     tf.initialize_all_variables().run()
     saver = tf.train.Saver(tf.all_variables())
-    checkpoints = glob.glob('./save/model.ckpt-*')
+    ckpt = tf.train.get_checkpoint_state(args.save_dir)
 
-    if len(checkpoints) > 0 and args.resume:
-      # We have worked on training this model before. Resume work rather than
-      # starting from scratch
-
-      # Get the iteration number for all of them
-      iterations = np.array([int(c.split('-')[1]) for c in checkpoints])
-      # Index of the checkpoint with the most iterations
-      idx = np.argmax(iterations)
-
-      restore_path = checkpoints[idx]
-      saver.restore(sess, restore_path)
-      print "restoring {0}".format(restore_path)
+    if args.resume and ckpt and ckpt.model_checkpoint_path:
+      print "restoring {0}".format(ckpt.model_checkpoint_path)
+      saver.restore(sess, ckpt.model_checkpoint_path)
 
     for e in xrange(args.num_epochs):
       sess.run(tf.assign(model.lr, args.learning_rate * (args.decay_rate ** e)))
