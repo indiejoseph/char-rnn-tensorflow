@@ -49,7 +49,7 @@ class TextLoader():
 
     for _lang in langs:
       self.tensors[_lang] = np.array(map(self.vocab.get, data[_lang]))
-    print self.tensors
+
     for key in data.keys():
       tensor_filename = "{}.{}.{}".format(os.path.join(self.data_dir, "data"), key, "npy")
       np.save(tensor_filename, np.array(map(self.vocab.get, data[key])))
